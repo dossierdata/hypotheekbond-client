@@ -1,0 +1,27 @@
+{
+  "name": "hypotheekbond/client",
+  "description": "A client implementing the hypotheekbond API.",
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "require": {
+    "ext-soap": "*",
+    "laravel/framework": "^5.2",
+    "nesbot/carbon": "~1.0"
+  },
+  "authors": [
+    {
+      "name": "Victor Preda",
+      "email": "victor@dossierdata.nl"
+    },
+    {
+      "name": "Lucas van der Have",
+      "email": "lucasvdhave@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "MortgageUnion\\": "src"
+    }
+  }
+}
