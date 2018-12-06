@@ -1,0 +1,1351 @@
+<?xml version="1.0"?>
+<definitions
+    xmlns="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:tns="https://www.hypotheekbond.nl/soapservices"
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    name="Hypotheekbond_Soap_Server"
+    targetNamespace="https://www.hypotheekbond.nl/soapservices">
+    <types>
+        <xsd:schema targetNamespace="https://www.hypotheekbond.nl/soapservices" elementFormDefault="qualified">
+            <xsd:element name="klantenResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+						<xsd:element name="errors" maxOccurs="1" minOccurs="0">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element type="xsd:string" name="error" maxOccurs="unbounded" minOccurs="0"/>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+                        <xsd:element minOccurs="0" maxOccurs="unbounded" name="klant">
+                            <xsd:complexType>
+                                <xsd:sequence>
+                                    <xsd:element minOccurs="0" maxOccurs="1" name="externID" type="xsd:string"/>
+                                    <xsd:element minOccurs="0" maxOccurs="1" name="status" type="xsd:string"/>
+                                    <xsd:element minOccurs="0" maxOccurs="1" name="url_sso" type="xsd:string"/>
+                                    <xsd:element minOccurs="0" maxOccurs="1" name="text" type="xsd:string"/>
+                                </xsd:sequence>
+                            </xsd:complexType>
+                        </xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="loginHeader">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element name="adviseur" type="xsd:string" />
+                        <xsd:element name="adviseurPassword" type="xsd:string" minOccurs="0" />
+                        <xsd:element name="relatieNummer" type="xsd:integer" minOccurs="0" />
+                        <xsd:element name="partner" type="xsd:string" />
+                        <xsd:element name="partnerPassword" type="xsd:string" />
+						<xsd:element name="apikey" minOccurs="0" >
+							<xsd:simpleType>
+								<xsd:restriction base="xsd:token">
+									<xsd:pattern value="[a-f0-9]{32}"/>
+								</xsd:restriction>
+							</xsd:simpleType>
+						</xsd:element>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="getSignalsResponse">
+                <xsd:complexType>
+                    <xsd:sequence>
+						<xsd:element name="Signalen">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="Oversluitingen" minOccurs="0">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="Oversluiting" maxOccurs="unbounded" minOccurs="1">
+													<xsd:complexType>
+														<xsd:sequence>
+															<xsd:element name="uuid" type="xsd:string" minOccurs="0"/>
+															<xsd:element name="HypotheekbondId" type="xsd:integer"/>
+															<xsd:element name="ExternId" type="xsd:string"/>
+															<xsd:element name="AdviseurNaam" type="xsd:string"/>
+															<xsd:element name="Naam" type="xsd:string"/>
+															<xsd:element name="Hoofdsom" type="xsd:double"/>
+															<xsd:element name="Boete" type="xsd:double"/>
+															<xsd:element name="VerschilPerMaand" type="xsd:double"/>
+															<xsd:element name="VerschilRvp" type="xsd:double"/>
+															<xsd:element name="Terugverdientijd" type="xsd:integer"/>
+															<xsd:element name="Flags">
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element name="Flag" type="xsd:string" minOccurs="0"/>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element name="Renteverlengingen" minOccurs="0">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="Renteverlenging" maxOccurs="unbounded" minOccurs="1">
+													<xsd:complexType>
+														<xsd:sequence>
+					                                        <xsd:element name="uuid" type="xsd:string" minOccurs="0"/>
+															<xsd:element name="HypotheekbondId" type="xsd:integer"/>
+															<xsd:element name="ExternId" type="xsd:string"/>
+															<xsd:element name="AdviseurNaam" type="xsd:string"/>
+															<xsd:element name="Naam" type="xsd:string"/>
+															<xsd:element name="Hoofdsom" type="xsd:double"/>
+															<xsd:element name="MaandenResterend">
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element name="Leningdeel" maxOccurs="unbounded">
+																			<xsd:complexType>
+																				<xsd:simpleContent>
+																					<xsd:extension base="xsd:int">
+																						<xsd:attribute name="ExternId" type="xsd:string"/>
+																						<xsd:attribute name="Bedrag" type="xsd:double"/>
+																					</xsd:extension>
+																				</xsd:simpleContent>
+																			</xsd:complexType>
+																		</xsd:element>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+															<xsd:element name="Flags">
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element name="Flag" type="xsd:string" minOccurs="0"/>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element name="ORVs" minOccurs="0">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="ORV" maxOccurs="unbounded" minOccurs="0">
+													<xsd:complexType>
+														<xsd:sequence>
+					                                        <xsd:element name="uuid" type="xsd:string" minOccurs="0"/>
+															<xsd:element name="HypotheekbondId" type="xsd:integer"/>
+															<xsd:element name="ExternId" type="xsd:string"/>
+															<xsd:element name="AdviseurNaam" type="xsd:string"/>
+															<xsd:element name="Naam" type="xsd:string"/>
+															<xsd:element name="HypotheekbondVerzekeringId" type="xsd:integer"/>
+															<xsd:element name="ExternVerzekeringId" type="xsd:string"/>
+															<xsd:element name="MaandpremieHuidig" type="xsd:double"/>
+															<xsd:element name="MaandpremieOversluiting" type="xsd:double"/>
+															<xsd:element name="VerschilTotaal" type="xsd:double"/>
+															<xsd:element name="Flags">
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element name="Flag" type="xsd:string" minOccurs="0"/>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+									<xsd:element name="Verhuizers" minOccurs="0">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="Verhuizer" maxOccurs="unbounded" minOccurs="0">
+													<xsd:complexType>
+														<xsd:sequence>
+					                                        <xsd:element name="uuid" type="xsd:string" minOccurs="0"/>
+															<xsd:element name="HypotheekbondId" type="xsd:integer"/>
+															<xsd:element name="ExternId" type="xsd:string"/>
+															<xsd:element name="AdviseurNaam" type="xsd:string"/>
+															<xsd:element name="Naam" type="xsd:string"/>
+															<xsd:element name="TeKoopSinds" type="xsd:date"/>
+															<xsd:element name="TeKoopAdres" type="xsd:string"/>
+															<xsd:element name="TeKoopAantalDagen" type="xsd:int"/>
+															<xsd:element name="TeKoopStatus" type="xsd:string"/>
+															<xsd:element name="Flags">
+																<xsd:complexType>
+																	<xsd:sequence>
+																		<xsd:element name="Flag" type="xsd:string" minOccurs="0"/>
+																	</xsd:sequence>
+																</xsd:complexType>
+															</xsd:element>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+					                <xsd:element name="Verhuurders" minOccurs="0">
+					                    <xsd:complexType>
+					                        <xsd:sequence>
+					                            <xsd:element name="Verhuurder" maxOccurs="unbounded" minOccurs="0">
+					                                <xsd:complexType>
+					                                    <xsd:sequence>
+					                                        <xsd:element name="uuid" type="xsd:string" minOccurs="0"/>
+					                                        <xsd:element name="HypotheekbondId" type="xsd:integer"/>
+					                                        <xsd:element name="ExternId" type="xsd:string"/>
+					                                        <xsd:element name="AdviseurNaam" type="xsd:string"/>
+					                                        <xsd:element name="Naam" type="xsd:string"/>
+					                                        <xsd:element name="TeHuurSinds" type="xsd:date"/>
+					                                        <xsd:element name="TeHuurAdres" type="xsd:string"/>
+					                                        <xsd:element name="TeHuurAantalDagen" type="xsd:int"/>
+					                                        <xsd:element name="TeHuurIsOffline" type="xsd:int"/>
+					                                        <xsd:element name="Flags">
+					                                            <xsd:complexType>
+					                                                <xsd:sequence>
+					                                                    <xsd:element name="Flag" type="xsd:string" minOccurs="0"/>
+					                                                </xsd:sequence>
+					                                            </xsd:complexType>
+					                                        </xsd:element>
+					                                    </xsd:sequence>
+					                                </xsd:complexType>
+					                            </xsd:element>
+					                        </xsd:sequence>
+					                    </xsd:complexType>
+					                </xsd:element>
+									<xsd:element name="Topafslagen" minOccurs="0">
+					                    <xsd:complexType>
+					                        <xsd:sequence>
+					                            <xsd:element name="Topafslag" maxOccurs="unbounded" minOccurs="1">
+					                                <xsd:complexType>
+					                                    <xsd:sequence>
+					                                        <xsd:element name="uuid" type="xsd:string" minOccurs="0"/>
+					                                        <xsd:element name="HypotheekbondId" type="xsd:integer"/>
+					                                        <xsd:element name="ExternId" type="xsd:string"/>
+					                                        <xsd:element name="AdviseurNaam" type="xsd:string"/>
+					                                        <xsd:element name="Naam" type="xsd:string"/>
+					                                        <xsd:element name="VerschilBruto" type="xsd:double"/>
+					                                        <xsd:element name="VerschilNetto" type="xsd:double"/>
+					                                        <xsd:element name="Flags">
+					                                            <xsd:complexType>
+					                                                <xsd:sequence>
+					                                                    <xsd:element name="Flag" type="xsd:string" minOccurs="0"/>
+					                                                </xsd:sequence>
+					                                            </xsd:complexType>
+					                                        </xsd:element>
+					                                    </xsd:sequence>
+					                                </xsd:complexType>
+					                            </xsd:element>
+					                        </xsd:sequence>
+					                    </xsd:complexType>
+					                </xsd:element>
+					                <xsd:element name="Criteria" minOccurs="0">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="Criterium" maxOccurs="unbounded" minOccurs="1">
+													<xsd:complexType>
+														<xsd:sequence>
+															<xsd:element name="HypotheekbondId" type="xsd:integer"/>
+															<xsd:element name="ExternId" type="xsd:string"/>
+															<xsd:element name="AdviseurNaam" type="xsd:string"/>
+															<xsd:element name="Naam" type="xsd:string"/>
+					                                        <xsd:element name="Signaal" type="xsd:string">
+					                                            <xsd:annotation>
+					                                                <xsd:documentation xml:lang="nl">
+					                                                Welk signaal is uitgesloten? Dit kan zijn: oversluiting, renteverlenging, orv of topafslag.
+					                                                </xsd:documentation>
+					                                            </xsd:annotation>
+					                                        </xsd:element>
+															<xsd:element name="Type" type="xsd:string">
+					                                            <xsd:annotation>
+					                                                <xsd:documentation xml:lang="nl">
+					                                                Welk type uitsluiting is dit?
+					                                                    datum  >  sluit signaal uit tot bepaalde datum
+					                                                    bedrag >  Sluit signaal uit tot een minimale besparing
+					                                                </xsd:documentation>
+					                                            </xsd:annotation>
+					                                        </xsd:element>
+					                                        <xsd:element name="WaardeBedrag" type="xsd:double" minOccurs="0"/>
+					                                        <xsd:element name="WaardeDatum" type="xsd:date" minOccurs="0"/>
+															<xsd:element name="Notitie" type="xsd:string"/>
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+					                <xsd:element name="IncompleteDossiers" minOccurs="0">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="Dossier" maxOccurs="unbounded" minOccurs="1">
+													<xsd:complexType>
+														<xsd:sequence>
+					                                        <xsd:element name="uuid" type="xsd:string" minOccurs="0"/>
+															<xsd:element name="HypotheekbondId" type="xsd:integer"/>
+															<xsd:element name="ExternId" type="xsd:string"/>
+															<xsd:element name="Naam" type="xsd:string"/>
+					                                        <xsd:element name="Percentage" type="xsd:integer" />
+					                                        <xsd:element name="IsBerekenbaar" type="xsd:boolean" />
+														</xsd:sequence>
+													</xsd:complexType>
+												</xsd:element>
+											</xsd:sequence>
+										</xsd:complexType>
+									</xsd:element>
+					                <xsd:element name="OversluitingenNaarBankspaar" minOccurs="0">
+					                    <xsd:complexType>
+					                        <xsd:sequence>
+					                            <xsd:element name="OversluitingNaarBankspaar" maxOccurs="unbounded" minOccurs="1">
+					                                <xsd:complexType>
+					                                    <xsd:sequence>
+					                                        <xsd:element name="uuid" type="xsd:string" minOccurs="0"/>
+					                                        <xsd:element name="HypotheekbondId" type="xsd:integer"/>
+					                                        <xsd:element name="ExternId" type="xsd:string"/>
+					                                        <xsd:element name="AdviseurNaam" type="xsd:string"/>
+					                                        <xsd:element name="Naam" type="xsd:string"/>
+					                                        <xsd:element name="Hoofdsom" type="xsd:double"/>
+					                                        <xsd:element name="Boete" type="xsd:double"/>
+					                                        <xsd:element name="VerschilPerMaand" type="xsd:double"/>
+					                                        <xsd:element name="VerschilRvp" type="xsd:double"/>
+					                                        <xsd:element name="Terugverdientijd" type="xsd:integer"/>
+					                                        <xsd:element name="Flags">
+					                                            <xsd:complexType>
+					                                                <xsd:sequence>
+					                                                    <xsd:element name="Flag" type="xsd:string" minOccurs="0"/>
+					                                                </xsd:sequence>
+					                                            </xsd:complexType>
+					                                        </xsd:element>
+					                                    </xsd:sequence>
+					                                </xsd:complexType>
+					                            </xsd:element>
+					                        </xsd:sequence>
+					                    </xsd:complexType>
+					                </xsd:element>
+								</xsd:sequence>
+							</xsd:complexType>
+						</xsd:element>
+					                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="insertUpdateClients">
+                <xsd:complexType>
+                    <xsd:sequence>
+					    <xsd:element name="klanten">
+					        <xsd:complexType>
+					            <xsd:sequence>
+					                <xsd:element name="klant" maxOccurs="unbounded">
+					                    <xsd:complexType>
+					                        <xsd:sequence>
+					                            <xsd:element name="referenties" minOccurs="0" maxOccurs="1">
+					                                <xsd:complexType>
+					                                    <xsd:annotation>
+					                                        <xsd:documentation xml:lang="nl">
+					                                            Eventuele door de externe partij gehanteerde IDs met type
+					                                        </xsd:documentation>
+					                                    </xsd:annotation>
+					                                    <xsd:sequence>
+					                                        <xsd:element name="referentie" maxOccurs="unbounded">
+					                                            <xsd:complexType>
+					                                                <xsd:sequence>
+					                                                    <xsd:element name="id" minOccurs="1" maxOccurs="1">
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:maxLength value="255" />
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="type" minOccurs="1" maxOccurs="1">
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:maxLength value="255" />
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                </xsd:sequence>
+					                                            </xsd:complexType>
+					                                        </xsd:element>
+					                                    </xsd:sequence>
+					                                </xsd:complexType>
+					                            </xsd:element>
+					                            <xsd:element name="externID">
+					                                <xsd:annotation>
+					                                    <xsd:documentation xml:lang="nl">
+					                                        Het door de externe partij gehanteerde ID. Dit wordt (in combinatie met "laatste_bewerking") gebruikt voor synchronisatie.
+					                                    </xsd:documentation>
+					                                </xsd:annotation>
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="64"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="adviseurID" type="xsd:integer" minOccurs="0">
+					                                <xsd:annotation>
+					                                    <xsd:documentation xml:lang="nl">
+					                                        Wordt in webservice genegeerd en mag daarin worden overgeslagen.
+					                                    </xsd:documentation>
+					                                </xsd:annotation>
+					                            </xsd:element>
+					                            <xsd:element name="deelnemer" minOccurs="0" maxOccurs="1">
+					                                <xsd:complexType>
+					                                    <xsd:annotation>
+					                                        <xsd:documentation xml:lang="nl">
+					                                            Dit veld wordt gebruikt voor het inlezen in het account van een serviceprovider.
+					                                        </xsd:documentation>
+					                                    </xsd:annotation>
+					                                    <xsd:sequence>
+					                                        <xsd:element name="externID">
+					                                            <xsd:annotation>
+					                                                <xsd:documentation xml:lang="nl">
+					                                                    Het door de externe partij gehanteerde ID. Dit is de unieke identificatie.
+					                                                </xsd:documentation>
+					                                            </xsd:annotation>
+					                                            <xsd:simpleType>
+					                                                <xsd:restriction base="xsd:string">
+					                                                    <xsd:maxLength value="64"/>
+					                                                </xsd:restriction>
+					                                            </xsd:simpleType>
+					                                        </xsd:element>
+					                                        <xsd:element name="afm_vergunning_id" type="xsd:integer">
+					                                            <xsd:annotation>
+					                                                <xsd:documentation xml:lang="nl">
+					                                                    De AFM-vergunning wordt door Hypotheekbond gehanteerd om het betreffende kantoor te vinden.
+					                                                </xsd:documentation>
+					                                            </xsd:annotation>
+					                                        </xsd:element>
+					                                        <xsd:element name="firmanaam" type="xsd:string"/>
+					                                        <xsd:element name="contactpersoon" type="xsd:string"/>
+					                                        <xsd:element name="straat" type="xsd:string"/>
+					                                        <xsd:element name="huisnummer" type="xsd:integer"/>
+					                                        <xsd:element name="toevoeging" type="xsd:string"/>
+					                                        <xsd:element name="postcode" type="xsd:string"/>
+					                                        <xsd:element name="plaats" type="xsd:string"/>
+					                                        <xsd:element name="email" type="xsd:string"/>
+					                                        <xsd:element name="telefoon" type="xsd:string"/>
+					                                    </xsd:sequence>
+					                                </xsd:complexType>
+					                            </xsd:element>
+					                            <xsd:element name="adviseurs_gebruikernaam" minOccurs="0">
+					                                <xsd:annotation>
+					                                    <xsd:documentation xml:lang="nl">
+					                                        De hier ingevulde naam wordt opgezocht in de Gebruikers-lijst van de adviseur (menu: Onderhoud > Gebruikers). Indien de naam nog niet bestaat, wordt deze automatisch toegevoegd. Bestaan er 2 of meer gebruikers met dezelfde naam, dan wordt degene met het laagste ID gekozen. Wordt eventueel overschreven door adviseur_gebruikerID.
+					                                    </xsd:documentation>
+					                                </xsd:annotation>
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="60"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="adviseurs_gebruikerID" type="xsd:integer" minOccurs="0">
+					                                <xsd:annotation>
+					                                    <xsd:documentation xml:lang="nl">
+					                                        Het ID van de gebruiker. Dit is te vinden onder Onderhoud &gt; Gebruikers. Als hier een bestaand ID wordt ingevuld overschrijft deze de waarde van adviseurs_gebruikernaam (indien ingevuld).
+					                                    </xsd:documentation>
+					                                </xsd:annotation>
+					                            </xsd:element>
+					
+					                            <xsd:element name="status" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:enumeration value="Actief"/>
+					                                        <xsd:enumeration value="In behandeling"/>
+					                                        <xsd:enumeration value="Afgewezen"/>
+					                                        <xsd:enumeration value="Vervallen"/>
+					                                        <xsd:enumeration value="Onbekend"/>
+					                                        <xsd:enumeration value="Lead"/>
+					                                        <xsd:enumeration value="Prospect"/>
+					                                        <xsd:enumeration value="Afgelopen"/>
+					                                        <xsd:enumeration value="Afwachting van passeren"/>
+					                                        <xsd:enumeration value="Stukken naar de notaris"/>
+					                                        <xsd:enumeration value="Ingelost"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					
+					                            <xsd:element name="naam">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="40"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="tussenvoegsels" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="16"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="initialen" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="10"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="voornaam" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="40"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="aanhef" minOccurs="0">
+					                                <xsd:annotation>
+					                                    <xsd:documentation xml:lang="nl">1 => man, 2 => vrouw</xsd:documentation>
+					                                </xsd:annotation>
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:pattern value="[1-2]"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="email" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="100"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="geboortedatum" type="xsd:date" minOccurs="0"/>
+					                            <xsd:element name="adres" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="100"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="postcode" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:minLength value="0" />
+					                                        <xsd:maxLength value="6" />
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="huisnummer" type="xsd:integer" minOccurs="0"/>
+					                            <xsd:element name="toevoeging" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="10"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="woonplaats" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="60"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="bron" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="20"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="bruto_jaarinkomen" type="xsd:decimal"  minOccurs="0"/>
+					                            <xsd:element name="vakantiegeld" type="xsd:decimal" minOccurs="0"/>
+					                            <xsd:element name="eindejaarsuitkering" type="xsd:decimal" minOccurs="0"/>
+					                            <xsd:element name="bruto_jaarinkomen_stand_per" type="xsd:date" minOccurs="0"/>
+					                            <xsd:element name="pensioeninkomen" type="xsd:decimal" minOccurs="0"/>
+					                            <xsd:element name="pensioeninkomen_stand_per" type="xsd:date" minOccurs="0"/>
+					                            <xsd:element name="burgerlijke_staat" minOccurs="0">
+					                                <xsd:annotation>
+					                                    <xsd:documentation xml:lang="nl">
+					                                        1 => Alleenstaand
+					                                        5 => Gehuwd (gem. goederen)
+					                                        2 => Gescheiden
+					                                        3 => Samenwonend (contract)
+					                                        4 => Samenwonend
+					                                        6 => Gehuwd (huw. voorw.)
+					                                        7 => Partnerreg. (gem.goederen)
+					                                        8 => Partnerreg. (reg.voorw.)
+					                                        9 => Weduwe/weduwnaar
+					                                        Indien onbekend en geen partner: 1.
+					                                        Indien onbekend en wel een partner aanwezig: 4
+					                                    </xsd:documentation>
+					                                </xsd:annotation>
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:pattern value="[1-9]"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="sofinummer" type="xsd:string" minOccurs="0"/>
+					                            <xsd:element name="rookt" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:enumeration value="yes"/>
+					                                        <xsd:enumeration value="no"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="telefoon_prive" type="xsd:string" minOccurs="0"/>
+					                            <xsd:element name="telefoon_werk" type="xsd:string" minOccurs="0"/>
+					                            <xsd:element name="telefoon_mobiel" type="xsd:string" minOccurs="0"/>
+					                            <xsd:element name="partner_naam" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="40"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="partner_voornaam" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="40"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="partner_tussenvoegsels" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="16"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="partner_initialen" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:maxLength value="10"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="partner_aanhef" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:pattern value="[1-2]"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="partner_geboortedatum" type="xsd:date" minOccurs="0"/>
+					                            <xsd:element name="partner_sofinummer" type="xsd:string" minOccurs="0"/>
+					                            <xsd:element name="partner_rookt" minOccurs="0">
+					                                <xsd:simpleType>
+					                                    <xsd:restriction base="xsd:string">
+					                                        <xsd:enumeration value="yes"/>
+					                                        <xsd:enumeration value="no"/>
+					                                    </xsd:restriction>
+					                                </xsd:simpleType>
+					                            </xsd:element>
+					                            <xsd:element name="partner_bruto_jaarinkomen" type="xsd:decimal" minOccurs="0"/>
+					                            <xsd:element name="partner_vakantiegeld" type="xsd:decimal" minOccurs="0"/>
+					                            <xsd:element name="partner_eindejaarsuitkering" type="xsd:decimal" minOccurs="0"/>
+					                            <xsd:element name="partner_bruto_jaarinkomen_stand_per" type="xsd:date" minOccurs="0"/>
+					                            <xsd:element name="partner_pensioeninkomen" type="xsd:decimal" minOccurs="0"/>
+					                            <xsd:element name="partner_pensioeninkomen_stand_per" type="xsd:date" minOccurs="0"/>
+					                            <xsd:element name="partner_email" type="xsd:string" minOccurs="0"/>
+					                            <xsd:element name="partner_telefoon_werk" type="xsd:string" minOccurs="0"/>
+					                            <xsd:element name="partner_telefoon_mobiel" type="xsd:string" minOccurs="0"/>
+					                            <xsd:element name="laatste_bewerking" type="xsd:integer">
+					                                <xsd:annotation>
+					                                    <xsd:documentation xml:lang="nl">
+					                                        Unix timestamp (seconden sinds 1 jan 1970). Indien de laatste_bewerking volgens de XML nieuwer is dan de Hypotheekbond-versie, wordt de Hypotheekbond-versie overschreven.
+					                                    </xsd:documentation>
+					                                </xsd:annotation>
+					                            </xsd:element>
+					                            <xsd:element name="kladblok" type="xsd:string" minOccurs="0"/>
+					
+					                            <xsd:element name="panden" minOccurs="0">
+					                                <xsd:complexType>
+					                                    <xsd:sequence>
+					                                        <xsd:element name="pand" maxOccurs="1">
+					                                            <xsd:complexType>
+					                                                <xsd:sequence>
+					                                                    <xsd:element name="externID">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                Het door de externe partij gehanteerde ID. Dit wordt gebruikt voor synchronisatie.
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:maxLength value="64"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="woningtoepassing" type="xsd:integer" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                1 => eigen woning
+					                                                                2 => 2e woning
+					                                                                3 => recreatiewoning
+					                                                                4 => verhuurde woning
+					                                                                5 => bedrijfswoning
+					                                                                6 => tijdelijk leegstaande woning
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="eigendom_sinds" type="xsd:date" minOccurs="0"/>
+					                                                    <xsd:element name="taxatiewaarde" type="xsd:integer">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">Indien onbekend: 0</xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="executiewaarde" type="xsd:integer">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">Indien onbekend: 0</xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="taxatiedatum" type="xsd:date" minOccurs="0"/>
+					                                                    <xsd:element name="woz_waarde" type="xsd:integer" minOccurs="0"/>
+					                                                    <xsd:element name="woz_datum" type="xsd:date" minOccurs="0"/>
+					                                                    <xsd:element name="type_woning">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                1 => appartement
+					                                                                2 => woning
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:integer">
+					                                                                <xsd:pattern value="[1-2]"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="hypotheken" minOccurs="0">
+					                                                        <xsd:complexType>
+					                                                            <xsd:sequence>
+					                                                                <xsd:element name="hypotheek" minOccurs="0" maxOccurs="unbounded">
+					                                                                    <xsd:complexType>
+					                                                                        <xsd:sequence>
+					                                                                            <xsd:element name="externID">
+					                                                                                <xsd:annotation>
+					                                                                                    <xsd:documentation xml:lang="nl">
+					                                                                                        Het door de externe partij gehanteerde ID. Dit wordt gebruikt voor synchronisatie.
+					                                                                                    </xsd:documentation>
+					                                                                                </xsd:annotation>
+					                                                                                <xsd:simpleType>
+					                                                                                    <xsd:restriction base="xsd:string">
+					                                                                                        <xsd:maxLength value="64"/>
+					                                                                                    </xsd:restriction>
+					                                                                                </xsd:simpleType>
+					                                                                            </xsd:element>
+					                                                                            <xsd:element name="banken_labelID" minOccurs="0" type="xsd:integer">
+					                                                                                <xsd:annotation>
+					                                                                                    <xsd:documentation xml:lang="nl">
+					                                                                                        Zie https://www.hypotheekbond.nl/xml/productlijst en daarbinnen deze xpath: /maatschappijen/geldverstrekkers/geldverstrekker/labels/label@ID
+					                                                                                    </xsd:documentation>
+					                                                                                </xsd:annotation>
+					                                                                            </xsd:element>
+					                                                                            <xsd:element name="hdn_leningmijtype" minOccurs="0" type="xsd:string">
+					                                                                                <xsd:annotation>
+					                                                                                    <xsd:documentation xml:lang="nl">
+					                                                                                        Als het banken_labelID niet bekend is (en dus hierboven leeg), kan dit ook worden opgezocht via het HDN leningmijtype. Wordt alleen gebruikt als banken_labelID leeg is.
+					                                                                                    </xsd:documentation>
+					                                                                                </xsd:annotation>
+					                                                                            </xsd:element>
+					                                                                            <xsd:element name="status" type="xsd:integer">
+					                                                                                <xsd:annotation>
+					                                                                                    <xsd:documentation xml:lang="nl">
+					                                                                                        1 => offerte
+					                                                                                        2 => lopend
+					                                                                                        3 => vervallen
+					                                                                                    </xsd:documentation>
+					                                                                                </xsd:annotation>
+					                                                                            </xsd:element>
+					                                                                            <xsd:element name="hypotheeknummer" type="xsd:string" minOccurs="0"/>
+					                                                                            <xsd:element name="hoofdsom" type="xsd:decimal"/>
+					                                                                            <xsd:element name="hoofdsom_restant" type="xsd:decimal" minOccurs="0"/>
+					                                                                            <xsd:element name="inschrijving" type="xsd:decimal" minOccurs="0"/>
+					                                                                            <xsd:element name="leningdelen" minOccurs="0">
+					                                                                                <xsd:complexType>
+					                                                                                    <xsd:sequence>
+					                                                                                        <xsd:element name="leningdeel" maxOccurs="unbounded">
+					                                                                                            <xsd:complexType>
+					                                                                                                <xsd:sequence minOccurs="0">
+					                                                                                                    <xsd:element name="externID">
+					                                                                                                        <xsd:simpleType>
+					                                                                                                            <xsd:restriction base="xsd:string">
+					                                                                                                                <xsd:maxLength value="64"/>
+					                                                                                                            </xsd:restriction>
+					                                                                                                        </xsd:simpleType>
+					                                                                                                    </xsd:element>
+					                                                                                                    <xsd:element name="leningdeel_nummer" minOccurs="0">
+					                                                                                                        <xsd:simpleType>
+					                                                                                                            <xsd:restriction base="xsd:string">
+					                                                                                                                <xsd:maxLength value="64"/>
+					                                                                                                            </xsd:restriction>
+					                                                                                                        </xsd:simpleType>
+					                                                                                                    </xsd:element>
+					                                                                                                    <xsd:element name="productID" type="xsd:integer" minOccurs="0">
+					                                                                                                        <xsd:annotation>
+					                                                                                                            <xsd:documentation xml:lang="nl">
+					                                                                                                                product ID zoals terug te vinden in https://www.hypotheekbond.nl/xml/productlijst en daarbinnen deze xpath: /maatschappijen/geldverstrekkers/geldverstrekker/labels/label/product@ID Kan niet worden gebruikt in combinatie met HDN leningmijtype.
+					                                                                                                                Let op: zorg ervoor dat alle producten binnen een hypotheek onder hetzelfde label vallen.
+					                                                                                                            </xsd:documentation>
+					                                                                                                        </xsd:annotation>
+					                                                                                                    </xsd:element>
+					                                                                                                    <xsd:element name="product_anders_aflosvorm" type="xsd:integer" minOccurs="0">
+					                                                                                                        <xsd:annotation>
+					                                                                                                            <xsd:documentation xml:lang="nl">
+					                                                                                                                Indien productID niet exact bepaald kan worden (vul in: 99) kan een productvorm worden ingevuld.
+					                                                                                                                1 => Aflosvrij
+					                                                                                                                2 => Spaar
+					                                                                                                                3 => Leven
+					                                                                                                                4 => Hybride (spaar/beleggen)
+					                                                                                                                5 => Beleggers
+					                                                                                                                6 => Annuiteiten
+					                                                                                                                7 => Lineair
+					                                                                                                                9 => Kediet
+					                                                                                                                11 => Banksparen (SEW)
+					                                                                                                                10 => Overbruggingskrediet
+					                                                                                                            </xsd:documentation>
+					                                                                                                        </xsd:annotation>
+					                                                                                                    </xsd:element>
+					                                                                                                    <xsd:element name="bedrag" type="xsd:decimal"/>
+					                                                                                                    <xsd:element name="bedrag_deel_box3" type="xsd:integer"/>
+					                                                                                                    <xsd:element name="tarief" type="xsd:decimal" minOccurs="0">
+					                                                                                                        <xsd:annotation>
+					                                                                                                            <xsd:documentation xml:lang="nl">
+					                                                                                                                Tegen welk tarief is dit leningdeel gesloten?
+					                                                                                                                0 => NHG
+					                                                                                                                50 => 50%EW
+					                                                                                                                75 => 75%EW
+					                                                                                                                100 =>100%EW
+					                                                                                                                etc..
+					                                                                                                            </xsd:documentation>
+					                                                                                                        </xsd:annotation>
+					                                                                                                    </xsd:element>
+					                                                                                                    <xsd:element name="tarief_op_basis_van" minOccurs="0">
+					                                                                                                        <xsd:annotation>
+					                                                                                                            <xsd:documentation xml:lang="nl">
+					                                                                                                                Default: EW (executiewaarde)
+					                                                                                                            </xsd:documentation>
+					                                                                                                        </xsd:annotation>
+					                                                                                                        <xsd:simpleType>
+					                                                                                                            <xsd:restriction base="xsd:string">
+					                                                                                                                <xsd:enumeration value="EW"/>
+					                                                                                                                <xsd:enumeration value="MW"/>
+					                                                                                                            </xsd:restriction>
+					                                                                                                        </xsd:simpleType>
+					                                                                                                    </xsd:element>
+					
+					                                                                                                    <xsd:element name="percentage" type="xsd:decimal"/>
+					                                                                                                    <xsd:element name="procentpunt_korting" type="xsd:decimal" minOccurs="0"/>
+					                                                                                                    <xsd:element name="rvp_jaren" type="xsd:integer" minOccurs="0"/>
+					                                                                                                    <xsd:element name="rvp_ingangsdatum" type="xsd:date"/>
+					                                                                                                    <xsd:element name="rvp_einddatum" type="xsd:date" minOccurs="0"/>
+					                                                                                                    <xsd:element name="looptijd" minOccurs="0">
+					                                                                                                        <xsd:simpleType>
+					                                                                                                            <xsd:restriction base="xsd:integer">
+					                                                                                                                <xsd:minInclusive value="1"/>
+					                                                                                                                <xsd:maxInclusive value="720"/>
+					                                                                                                            </xsd:restriction>
+					                                                                                                        </xsd:simpleType>
+					                                                                                                    </xsd:element>
+					                                                                                                    <xsd:element name="looptijd_begindatum" type="xsd:date"/>
+					                                                                                                    <xsd:element name="einddatum_renteaftrek" type="xsd:date"  minOccurs="0"/>
+					                                                                                                    <xsd:element name="schuldrestpeilingen" minOccurs="0">
+					                                                                                                        <xsd:complexType>
+					                                                                                                            <xsd:sequence>
+					                                                                                                                <xsd:element name="schuldrestpeiling" maxOccurs="unbounded">
+					                                                                                                                    <xsd:complexType>
+					                                                                                                                        <xsd:sequence minOccurs="0">
+					                                                                                                                            <xsd:element name="situatie" type="xsd:decimal" minOccurs="0">
+					                                                                                                                                <xsd:annotation>
+					                                                                                                                                    <xsd:documentation xml:lang="nl">
+					                                                                                                                                        Situatie van de schuldrestpeiling
+					                                                                                                                                        0 => Aanpassing schuldrest
+					                                                                                                                                        1 => Opname
+					                                                                                                                                        2 => Aflossing
+					                                                                                                                                    </xsd:documentation>
+					                                                                                                                                </xsd:annotation>
+					                                                                                                                            </xsd:element>
+					                                                                                                                            <xsd:element name="datum" type="xsd:date"/>
+					                                                                                                                            <xsd:element name="bedrag" type="xsd:decimal" minOccurs="0"/>
+					                                                                                                                            <xsd:element name="bedrag_box_3" type="xsd:decimal" minOccurs="0"/>
+					                                                                                                                            <xsd:element name="tarief" type="xsd:decimal" minOccurs="0">
+					                                                                                                                                <xsd:annotation>
+					                                                                                                                                    <xsd:documentation xml:lang="nl">
+					                                                                                                                                        Tegen welk tarief?
+					                                                                                                                                        0 => NHG
+					                                                                                                                                        50 => 50%EW
+					                                                                                                                                        75 => 75%EW
+					                                                                                                                                        100 => 100%EW
+					                                                                                                                                        etc..
+					                                                                                                                                    </xsd:documentation>
+					                                                                                                                                </xsd:annotation>
+					                                                                                                                            </xsd:element>
+					                                                                                                                            <xsd:element name="tarief_op_basis_van" minOccurs="0">
+					                                                                                                                                <xsd:annotation>
+					                                                                                                                                    <xsd:documentation xml:lang="nl">
+					                                                                                                                                        Default: EW (executiewaarde)
+					                                                                                                                                    </xsd:documentation>
+					                                                                                                                                </xsd:annotation>
+					                                                                                                                                <xsd:simpleType>
+					                                                                                                                                    <xsd:restriction base="xsd:string">
+					                                                                                                                                        <xsd:enumeration value="EW"/>
+					                                                                                                                                        <xsd:enumeration value="MW"/>
+					                                                                                                                                    </xsd:restriction>
+					                                                                                                                                </xsd:simpleType>
+					                                                                                                                            </xsd:element>
+					                                                                                                                        </xsd:sequence>
+					                                                                                                                    </xsd:complexType>
+					                                                                                                                </xsd:element>
+					                                                                                                            </xsd:sequence>
+					                                                                                                        </xsd:complexType>
+					                                                                                                    </xsd:element>
+					                                                                                                </xsd:sequence>
+					                                                                                            </xsd:complexType>
+					                                                                                        </xsd:element>
+					                                                                                    </xsd:sequence>
+					                                                                                </xsd:complexType>
+					                                                                            </xsd:element>
+					                                                                        </xsd:sequence>
+					                                                                    </xsd:complexType>
+					                                                                </xsd:element>
+					                                                            </xsd:sequence>
+					                                                        </xsd:complexType>
+					                                                    </xsd:element>
+					                                                </xsd:sequence>
+					                                            </xsd:complexType>
+					                                        </xsd:element>
+					                                    </xsd:sequence>
+					                                </xsd:complexType>
+					                            </xsd:element>
+					                            <xsd:element name="verzekeringen" minOccurs="0">
+					                                <xsd:complexType>
+					                                    <xsd:sequence>
+					                                        <xsd:element name="verzekering" minOccurs="0" maxOccurs="unbounded">
+					                                            <xsd:complexType>
+					                                                <xsd:sequence>
+					                                                    <xsd:element name="externID">
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:maxLength value="64"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					
+					                                                    <xsd:element name="type" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                Wanneer niet ingevuld wordt standaard een de keuze levenverzekering - gemengd gekozen.
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:enumeration value="levenverzekering - gemengd"/>
+					                                                                <xsd:enumeration value="levenverzekering - overlijden"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="bankID" type="xsd:integer" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                Zie https://www.hypotheekbond.nl/xml/productlijst en daarbinnen deze xpath: /maatschappijen/verzekeraars/verzekeraar@ID
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="hdn_leningmijtype" minOccurs="0" type="xsd:string">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                Als het bankID niet bekend is (en dus hierboven leeg), kan dit ook worden opgezocht via het HDN leningmijtype. Wordt alleen gebruikt als bankID leeg is.
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="leningdeelID" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                Koppelt een verzekering aan een leningdeel.externID van dezelfde klant.
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:maxLength value="64"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="verpand" type="xsd:string" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                nee => niet verpand
+					                                                                hypotheek => verpand aan de hypotheek
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="polisnummer">
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:maxLength value="20"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="box" type="xsd:integer" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">1 of 3</xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="doelkapitaal" type="xsd:decimal" minOccurs="0"/>
+					                                                    <xsd:element name="nemer1_persoon" type="xsd:string" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                k=> aanvrager
+					                                                                p=> partner
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="nemer2_persoon" type="xsd:string" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                k=> aanvrager
+					                                                                p=> partner
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="verzekerde1_orv_dekking" type="xsd:decimal"/>
+					                                                    <xsd:element name="verzekerde1_orv_dekking_type" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                Wanneer niet bekend wordt 'gelijkblijvend' berekend.
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:enumeration value="gelijkblijvend"/>
+					                                                                <xsd:enumeration value="annuitair dalend"/>
+					                                                                <xsd:enumeration value="lineair dalend"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="verzekerde2_orv_dekking" type="xsd:decimal"
+					                                                                 minOccurs="0"/>
+					                                                    <xsd:element name="verzekerde2_orv_dekking_type" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                Wanneer niet bekend wordt 'gelijkblijvend' berekend.
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:enumeration value="gelijkblijvend"/>
+					                                                                <xsd:enumeration value="annuitair dalend"/>
+					                                                                <xsd:enumeration value="lineair dalend"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="premie" type="xsd:decimal"/>
+					                                                    <xsd:element name="premie_periode" type="xsd:integer">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                1=> p/maand
+					                                                                2=> p/kwartaal
+					                                                                3=> p/jaar
+					                                                                4=> ineens
+					                                                                5=> overig zie notitieveld bij verzekering
+					                                                                6=> p/halfjaar
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="premieopslag" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                0=>Nee
+					                                                                1=>Ja
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:enumeration value="0"/>
+					                                                                <xsd:enumeration value="1"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="ingangsdatum" type="xsd:date"/>
+					                                                    <xsd:element name="einddatum" type="xsd:date"/>
+					                                                    <xsd:element name="premieduur" type="xsd:integer" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">Premieduur in maanden</xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="eerste_storting" type="xsd:decimal" minOccurs="0"/>
+					                                                    <xsd:element name="afkoopwaarde" type="xsd:decimal" minOccurs="0"/>
+					                                                    <xsd:element name="afkoopwaarde_datum" type="xsd:date" minOccurs="0"/>
+					                                                    <xsd:element name="prognoserendement" type="xsd:decimal" minOccurs="0"/>
+					                                                    <xsd:element name="spaardeel" type="xsd:integer" minOccurs="0"/>
+					                                                    <xsd:element name="verwachtekapitaal" type="xsd:decimal" minOccurs="0"/>
+					                                                </xsd:sequence>
+					                                            </xsd:complexType>
+					                                        </xsd:element>
+					                                    </xsd:sequence>
+					                                </xsd:complexType>
+					                            </xsd:element>
+					                            <xsd:element name="rekeningen" minOccurs="0">
+					                                <xsd:complexType>
+					                                    <xsd:sequence>
+					                                        <xsd:element name="rekening" minOccurs="0" maxOccurs="unbounded">
+					                                            <xsd:complexType>
+					                                                <xsd:sequence>
+					                                                    <xsd:element name="externID">
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:maxLength value="64"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="type">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                1 => Spaarloon-rekening
+					                                                                2 => Premiespaar-rekening
+					                                                                3 => Levensloop-rekening
+					                                                                5 => Beleggers-rekening (kan worden gekoppeld aan leningdeel)
+					                                                                6 => Spaar-rekening (kan worden gekoppeld aan leningdeel)
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:integer">
+					                                                                <xsd:minInclusive value="1"/>
+					                                                                <xsd:maxInclusive value="6"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="bankID" type="xsd:integer">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                Zie https://www.hypotheekbond.nl/xml/productlijst en daarbinnen deze xpath: /maatschappijen/banken/bank@ID
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="leningdeelID" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                Koppelt een rekening aan een leningdeel.externID van dezelfde klant.
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:maxLength value="64"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="rekeningnummer" minOccurs="0" type="xsd:string"/>
+					                                                    <xsd:element name="box" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                In welke box valt deze rekening?
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:enumeration value="1"/>
+					                                                                <xsd:enumeration value="3"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="ingangsdatum" type="xsd:date"/>
+					                                                    <xsd:element name="einddatum" type="xsd:date" minOccurs="0"/>
+					                                                    <xsd:element name="inleg" type="xsd:decimal" minOccurs="0"/>
+					                                                    <xsd:element name="inleg_periode" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                1=>p/maand
+					                                                                2=>p/kwartaal
+					                                                                3=>p/jaar
+					                                                                4=>ineens
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:integer">
+					                                                                <xsd:minInclusive value="1"/>
+					                                                                <xsd:maxInclusive value="4"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="eerste_storting" type="xsd:decimal" minOccurs="0"/>
+					                                                    <xsd:element name="doelkapitaal" type="xsd:decimal" minOccurs="0"/>
+					                                                    <xsd:element name="beleggersprofiel" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                1=>zeer defensief
+					                                                                2=>defensief
+					                                                                3=>neutraal
+					                                                                4=>offensief
+					                                                                5=>zeer offensief
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:integer">
+					                                                                <xsd:minInclusive value="1"/>
+					                                                                <xsd:maxInclusive value="5"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="rentevastperiode" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                -1 => gelijk aan leningdeel
+					                                                                0 => variabel
+					                                                                1-50 => jaren
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:integer">
+					                                                                <xsd:minInclusive value="-1"/>
+					                                                                <xsd:maxInclusive value="50"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="rente" type="xsd:decimal" minOccurs="0"/>
+					                                                    <xsd:element name="prognoserendement" type="xsd:decimal" minOccurs="0"/>
+					                                                    <xsd:element name="saldo" type="xsd:decimal" minOccurs="0"/>
+					                                                    <xsd:element name="saldo_datum" type="xsd:date" minOccurs="0"/>
+					                                                    <xsd:element name="status" minOccurs="0">
+					                                                        <xsd:annotation>
+					                                                            <xsd:documentation xml:lang="nl">
+					                                                                1 => lopend
+					                                                                2 => lopend zonder premie
+					                                                                3 => vervallen
+					                                                                4 => doorstortend
+					                                                            </xsd:documentation>
+					                                                        </xsd:annotation>
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:integer">
+					                                                                <xsd:minInclusive value="1"/>
+					                                                                <xsd:maxInclusive value="4"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                </xsd:sequence>
+					                                            </xsd:complexType>
+					                                        </xsd:element>
+					                                    </xsd:sequence>
+					                                </xsd:complexType>
+					                            </xsd:element>
+					                            <xsd:element name="bkr" minOccurs="0">
+					                                <xsd:complexType>
+					                                    <xsd:sequence>
+					                                        <xsd:element name="registratie" minOccurs="0" maxOccurs="unbounded">
+					                                            <xsd:complexType>
+					                                                <xsd:sequence>
+					                                                    <xsd:element name="externID">
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:maxLength value="64"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="codering">
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:maxLength value="2"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="kredietsoort">
+					                                                        <xsd:simpleType>
+					                                                            <xsd:restriction base="xsd:string">
+					                                                                <xsd:maxLength value="2"/>
+					                                                            </xsd:restriction>
+					                                                        </xsd:simpleType>
+					                                                    </xsd:element>
+					                                                    <xsd:element name="einddatum" type="xsd:date"/>
+					                                                </xsd:sequence>
+					                                            </xsd:complexType>
+					                                        </xsd:element>
+					                                    </xsd:sequence>
+					                                </xsd:complexType>
+					                            </xsd:element>
+					                        </xsd:sequence>
+					                    </xsd:complexType>
+					                </xsd:element>
+					            </xsd:sequence>
+					            <xsd:attribute name="versie" type="xsd:decimal" use="required"/>
+					        </xsd:complexType>
+					    </xsd:element>
+					                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </types>
+    <message name="insertUpdateClientsResponse">
+        <part name="insertUpdateClientsReturn" element="tns:klantenResponse"/>
+    </message>
+    <message name="singleClickLoginResponse">
+        <part name="singleClickLoginReturn" type="xsd:string"/>
+    </message>
+    <message name="singleClickLoginRequest">
+    </message>
+    <message name="getSignalsResponse">
+        <part name="getSignalsReturn" element="tns:getSignalsResponse"/>
+    </message>
+    <message name="getSignalsRequest">
+    </message>
+    <message name="insertUpdateClientsRequest">
+        <part name="insertUpdateClients" element="tns:insertUpdateClients"/>
+    </message>
+    <message name="loginHeaderRequest">
+        <part name="loginHeader" element="tns:loginHeader"/>
+    </message>
+    <portType name="Hypotheekbond_Soap_ServerPort">
+        <operation name="insertUpdateClients">
+            <input message="tns:insertUpdateClientsRequest"/>
+            <output message="tns:insertUpdateClientsResponse"/>
+        </operation>
+        <operation name="singleClickLogin">
+            <input message="tns:singleClickLoginRequest"/>
+            <output message="tns:singleClickLoginResponse"/>
+        </operation>
+        <operation name="getSignals">
+            <input message="tns:getSignalsRequest"/>
+            <output message="tns:getSignalsResponse"/>
+        </operation>
+        <operation name="getSignalsNoCache">
+            <input message="tns:getSignalsRequest"/>
+            <output message="tns:getSignalsResponse"/>
+        </operation>
+    </portType>
+    <binding name="Hypotheekbond_Soap_ServerBinding" type="tns:Hypotheekbond_Soap_ServerPort">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="insertUpdateClients">
+            <documentation>Klanten importeren en bijwerken</documentation>
+            <soap:operation soapAction="https://www.hypotheekbond.nl/soapservices/insertUpdateClients" style="document"/>
+            <input name="insertUpdateClientsRequest">
+                <soap:header use="literal" message="tns:loginHeaderRequest" part="loginHeader" />
+                <soap:body use="literal" message="tns:insertUpdateClientsRequest" part="insertUpdateClients"/>
+            </input>
+            <output name="insertUpdateClientsResponse">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="singleClickLogin">
+            <documentation>Genereert op basis van de loginheader een unieke inlogcode waarmee een adviseur gedurende 5 seconden kan worden ingelogd.</documentation>
+            <soap:operation soapAction="https://www.hypotheekbond.nl/soapservices/singleClickLoginRequest" style="rpc" />
+            <input name="singleClickLoginRequest">
+                <soap:header use="literal" message="tns:loginHeaderRequest" part="loginHeader" />
+                <soap:body use="literal"/>
+            </input>
+            <output name="singleClickLoginResponse">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getSignals">
+            <documentation>Download een beknopt overzicht van alle signalen van de adviseur. Deze signalen kunnen in een CRM worden getoond, waarna de adviseur via SingleClickLogin kan inloggen om details te bekijken.</documentation>
+            <soap:operation soapAction="https://www.hypotheekbond.nl/soapservices/getSignals" style="rpc" />
+            <input name="getSignalsRequest">
+                <soap:header use="literal" message="tns:loginHeaderRequest" part="loginHeader" />
+                <soap:body use="literal"/>
+            </input>
+            <output name="getSignalsResponse">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="getSignalsNoCache">
+            <documentation>Download een beknopt overzicht van alle signalen van de adviseur. Deze signalen kunnen in een CRM worden getoond, waarna de adviseur via SingleClickLogin kan inloggen om details te bekijken.</documentation>
+            <soap:operation soapAction="https://www.hypotheekbond.nl/soapservices/getSignalsNoCache" style="rpc" />
+            <input name="getSignalsRequest">
+                <soap:header use="literal" message="tns:loginHeaderRequest" part="loginHeader" />
+                <soap:body use="literal" />
+            </input>
+            <output name="getSignalsResponse">
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="Hypotheekbond_Soap_ServerService">
+        <port name="Hypotheekbond_Soap_ServerPort" binding="tns:Hypotheekbond_Soap_ServerBinding">
+            <soap:address location="https://www.hypotheekbond.nl/soapservices"/>
+        </port>
+    </service>
+</definitions>
