@@ -8,12 +8,12 @@ use MyCLabs\Enum\Enum;
  * Class MortgageStatus
  * @package MortgageUnion\Enums
  *
- * @method static CustomerMartialStatus ACTIVE()
- * @method static CustomerMartialStatus IN_PROGRESS()
- * @method static CustomerMartialStatus LEAD()
- * @method static CustomerMartialStatus CANCELLED()
- * @method static CustomerMartialStatus PROSPECT()
- * @method static CustomerMartialStatus UNKNOWN()
+ * @method static MortgageStatus ACTIVE()
+ * @method static MortgageStatus IN_PROGRESS()
+ * @method static MortgageStatus LEAD()
+ * @method static MortgageStatus CANCELLED()
+ * @method static MortgageStatus PROSPECT()
+ * @method static MortgageStatus UNKNOWN()
  *
  */
 class MortgageStatus extends Enum
