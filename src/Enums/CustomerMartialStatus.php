@@ -8,7 +8,14 @@ use MyCLabs\Enum\Enum;
  * Class CustomerMartialStatus
  * @package MortgageUnion\Enums
  *
- * @method static SignalType CRITERION()
+ * @method static CustomerMartialStatus SINGLE()
+ * @method static CustomerMartialStatus MARRIED_JOINT_ASSETS()
+ * @method static CustomerMartialStatus MARRIED_PRENUP()
+ * @method static CustomerMartialStatus PARTNER_REGISTRATION_JOINT_ASSETS()
+ * @method static CustomerMartialStatus PARTNER_REGISTRATION_PRENUP()
+ * @method static CustomerMartialStatus COHABITATION_WITH_PRENUP()
+ * @method static CustomerMartialStatus COHABITATION_WITHOUT_PRENUP()
+ * @method static CustomerMartialStatus DIVORCED()
  *
  */
 class CustomerMartialStatus extends Enum
