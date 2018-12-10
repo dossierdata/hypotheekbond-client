@@ -24,19 +24,7 @@ class MortgageUnion implements \MortgageUnion\Clients\MortgageUnion
     public function __construct(MortgageUnionConfig $mortgageUnionConfig)
     {
         $this->client = new \SoapClient($mortgageUnionConfig->getWSDL(), [
-//            'classmap' => [
-//                'klant' => Customer::class,
-//                'Oversluiting' => Refinancings::class,
-//            ],
         ]);
-
-//        $customers = [
-//            new Customer();
-//        ]
-
-//        $this->client->insertUpdateClients([
-//            'klanten' => $customers
-//        ]);
 
         $this->mortgageUnionConfig = $mortgageUnionConfig;
 
@@ -69,6 +57,8 @@ class MortgageUnion implements \MortgageUnion\Clients\MortgageUnion
     /**
      * @param $data
      * @return mixed
+     * @throws ValidationException
+     * @throws VersionMismatchException
      */
     public function insertUpdateClients($data)
     {
@@ -78,8 +68,10 @@ class MortgageUnion implements \MortgageUnion\Clients\MortgageUnion
             $this->validateResult($result);
         } catch (ValidationException $validationException) {
             $this->getLogger()->error($validationException->getErrors());
+            throw (new ValidationException())->setErrors($validationException->getErrors());
         } catch (VersionMismatchException $versionMismatchException) {
             $this->getLogger()->error($versionMismatchException->getErrors());
+            throw (new VersionMismatchException())->setErrors($versionMismatchException->getErrors());
         }
 
         return $result;
