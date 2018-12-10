@@ -9,28 +9,28 @@ use MortgageUnion\Models\Signals\Renewal;
 class RenewalParser
 {
     /**
-     * @param $renewals
+     * @param $mortgageUnionRenewals
      * @return Collection
      */
-    public function parse($renewals)
+    public function parse($mortgageUnionRenewals)
     {
         $signals = new Collection();
 
-        foreach ($renewals as $renewal) {
+        foreach ($mortgageUnionRenewals as $mortgageUnionRenewal) {
             $attributes = [
-                'mortgageUnionId' => (integer)$renewal->HypotheekbondId,
-                'externalId' => (integer)$renewal->ExternId,
-                'name' => (string)$renewal->Naam,
-                'advisorName' => (string)$renewal->AdviseurNaam,
-                'principalAmount' => (float)$renewal->Hoofdsom,
+                'mortgageUnionId' => (integer)$mortgageUnionRenewal->HypotheekbondId,
+                'externalId' => (integer)$mortgageUnionRenewal->ExternId,
+                'name' => (string)$mortgageUnionRenewal->Naam,
+                'advisorName' => (string)$mortgageUnionRenewal->AdviseurNaam,
+                'principalAmount' => (float)$mortgageUnionRenewal->Hoofdsom,
             ];
 
             $renewal = new Renewal($attributes);
 
-            if (isset($rawSignal->MaandenResterend) && isset($rawSignal->MaandenResterend->Leningdeel)) {
+            if (isset($mortgageUnionRenewal->MaandenResterend) && isset($mortgageUnionRenewal->MaandenResterend->Leningdeel)) {
                 $renewal->setLoans(
                     $this->parseLoans(
-                        is_array($renewal->MaandenResterend->Leningdeel) ? $renewal->MaandenResterend->Leningdeel : [$renewal->MaandenResterend->Leningdeel]
+                        is_array($mortgageUnionRenewal->MaandenResterend->Leningdeel) ? $mortgageUnionRenewal->MaandenResterend->Leningdeel : [$mortgageUnionRenewal->MaandenResterend->Leningdeel]
                     )
                 );
             }
