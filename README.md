@@ -1,9 +1,10 @@
 This is a package that consumes the hypotheekbond SOAP API for pushing customer data to their system and extracting important information in form of signals.
-##Implementation
+
+## Implementation
 Implement your own version of the MortgageUnionConfig and bind it to the contract.
 
 
-##Publish
+## Publish
 There is an example config file that can be published with :
 ```bash
 php artisan vendor:publish --provider='MortgageUnion\ServiceProvider' --tag='config'
@@ -12,7 +13,7 @@ php artisan vendor:publish --provider='MortgageUnion\ServiceProvider' --tag='con
 The config contains advisor and partner credentials. The advisor credentials are the credentials of the user of the tenant of hypotheekbond that you want to access.
     And the partner credentials need to be requested at hypotheekbond.
 
-##Examples
+## Examples
 Example push usage:
 ```php
 $customer = new \MortgageUnion\Models\Customer([
