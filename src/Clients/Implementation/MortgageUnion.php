@@ -23,22 +23,28 @@ class MortgageUnion implements \MortgageUnion\Clients\MortgageUnion
      */
     public function __construct(MortgageUnionConfig $mortgageUnionConfig)
     {
-        $this->client = new \SoapClient($mortgageUnionConfig->getWSDL(), [
-        ]);
-
         $this->mortgageUnionConfig = $mortgageUnionConfig;
+    }
 
-        $loginHeaderContent = [
-            'adviseur' => $mortgageUnionConfig->getAdvisorUser(),
-            'adviseurPassword' => $mortgageUnionConfig->getAdvisorPassword(),
-            'partner' => $mortgageUnionConfig->getPartnerUser(),
-            'partnerPassword' => $mortgageUnionConfig->getPartnerPassword(),
-        ];
+    protected function getSoapClient()
+    {
+        if ($this->client === null) {
+            $this->client = new \SoapClient($this->mortgageUnionConfig->getWSDL(), [
+            ]);
 
-        $loginHeader = new SoapHeader($mortgageUnionConfig->getURI(), 'loginHeader', $loginHeaderContent, false);
+            $loginHeaderContent = [
+                'adviseur' => $this->mortgageUnionConfig->getAdvisorUser(),
+                'adviseurPassword' => $this->mortgageUnionConfig->getAdvisorPassword(),
+                'partner' => $this->mortgageUnionConfig->getPartnerUser(),
+                'partnerPassword' => $this->mortgageUnionConfig->getPartnerPassword(),
+            ];
 
-        $this->client->__setSoapHeaders($loginHeader);
+            $loginHeader = new SoapHeader($this->mortgageUnionConfig->getURI(), 'loginHeader', $loginHeaderContent, false);
 
+            $this->client->__setSoapHeaders($loginHeader);
+        }
+
+        return $this->client;
     }
 
     /**
@@ -46,7 +52,7 @@ class MortgageUnion implements \MortgageUnion\Clients\MortgageUnion
      */
     public function getSignals()
     {
-        return $this->client->getSignals();
+        return $this->getSoapClient()->getSignals();
     }
 
     public function createOrUpdateCustomer()
@@ -62,7 +68,7 @@ class MortgageUnion implements \MortgageUnion\Clients\MortgageUnion
      */
     public function insertUpdateClients($data)
     {
-        $result =  $this->client->insertUpdateClients($data);
+        $result =  $this->getSoapClient()->insertUpdateClients($data);
 
         try {
             $this->validateResult($result);

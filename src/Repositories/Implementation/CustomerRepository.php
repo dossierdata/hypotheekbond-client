@@ -43,8 +43,6 @@ class CustomerRepository implements \MortgageUnion\Repositories\CustomerReposito
 
         $data['laatste_bewerking'] = $lastUpdatedAtTimestamp;
 
-//        dd($data);
-
         $result = $this->client->insertUpdateClients([
             'klanten' => [
                 'klant' => $data,

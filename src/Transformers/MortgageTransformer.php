@@ -38,8 +38,8 @@ class MortgageTransformer extends Transformer
             'hdn_leningmijtype' => $mortgage->hdnLoanType,
             'status' => $mortgage->status,
             'hypotheeknummer' => $mortgage->mortgageNumber,
-            'hoofdsom' => $mortgage->principalAmountRemainder,
-            'hoofdsom_restant' => $mortgage->principalAmount,
+            'hoofdsom' => $mortgage->principalAmount,
+            'hoofdsom_restant' => $mortgage->principalAmountRemainder,
             'inschrijving' => $mortgage->registration,
             'leningdelen' => $this->transformMortgageParts($mortgage->getMortgageParts()),
         ];

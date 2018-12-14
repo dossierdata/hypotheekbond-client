@@ -140,8 +140,10 @@ class CustomerTransformer extends Transformer
     {
         $transformedPolicies = [];
 
-        foreach ($policies as $policy) {
-            $transformedPolicies[] = $this->policyTransformer->transform($policy);
+        if ($policies !== null) {
+            foreach ($policies as $policy) {
+                $transformedPolicies[] = $this->policyTransformer->transform($policy);
+            }
         }
 
         return $transformedPolicies;
@@ -172,6 +174,7 @@ class CustomerTransformer extends Transformer
     protected function transformCreditAgencyRegistration($creditAgencyRegistrations)
     {
         $transformedCreditAgencyRegistration = [];
+
         if ($creditAgencyRegistrations !== null) {
             foreach ($creditAgencyRegistrations as $creditAgencyRegistration) {
                 $transformedCreditAgencyRegistration[] = $this->creditAgencyRegistrationTransformer->transform($creditAgencyRegistration);
