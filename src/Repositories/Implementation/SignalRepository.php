@@ -3,17 +3,17 @@
 namespace MortgageUnion\Repositories\Implementation;
 
 
+use Illuminate\Support\Collection;
+use MortgageUnion\Clients\MortgageUnion;
 use MortgageUnion\Enums\SignalType;
 use MortgageUnion\Parsers\CriterionParser;
 use MortgageUnion\Parsers\IncompleteDossierParser;
 use MortgageUnion\Parsers\LifeInsuranceParser;
+use MortgageUnion\Parsers\RefinancingParser;
 use MortgageUnion\Parsers\RefinancingToBankSavingParser;
+use MortgageUnion\Parsers\RenewalParser;
 use MortgageUnion\Parsers\RenterParser;
 use MortgageUnion\Parsers\SellerParser;
-use MortgageUnion\Parsers\RefinancingParser;
-use Illuminate\Support\Collection;
-use MortgageUnion\Clients\MortgageUnion;
-use MortgageUnion\Parsers\RenewalParser;
 use MortgageUnion\Parsers\TopExitParser;
 
 class SignalRepository implements \MortgageUnion\Repositories\SignalRepository
@@ -216,7 +216,7 @@ class SignalRepository implements \MortgageUnion\Repositories\SignalRepository
         $signals = new Collection();
 
         if (property_exists($rawSignals, 'Oversluiting')) {
-            $this->refinancingParser->parse(
+            $signals = $this->refinancingParser->parse(
                 is_array($rawSignals->Oversluiting) ? $rawSignals->Oversluiting : [$rawSignals->Oversluiting]
             );
         }
