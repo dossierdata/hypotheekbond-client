@@ -31,22 +31,20 @@ class PropertyTransformer extends Transformer
     public function transform(Property $property)
     {
         $this->attributes = [
-        'externID' => $property->externalId,
-        'woningtoepassing' => $property->application,
-        'eigendom_sinds' => $property->ownedSince,
-        'taxatiewaarde' => $property->taxationValue,
-        'executiewaarde' => $property->executionValue,
-        'taxatiedatum' => $property->taxationDate,
-        'woz_waarde' => $property->realEstateValue,
-        'woz_datum' => $property->realEstateDate,
-        'type_woning' => $property->type,
-        'hypotheken' => $this->transformMortgages($property->getMortgages()),
+            'externID' => $property->externalId,
+            'woningtoepassing' => $property->application,
+            'eigendom_sinds' => $property->ownedSince,
+            'taxatiewaarde' => $property->taxationValue,
+            'executiewaarde' => $property->executionValue,
+            'taxatiedatum' => $property->taxationDate,
+            'woz_waarde' => $property->realEstateValue,
+            'woz_datum' => $property->realEstateDate,
+            'type_woning' => $property->type,
+            'hypotheken' => $this->transformMortgages($property->getMortgages()),
         ];
 
         $this->clearEmptyAttributes();
         $this->transformDates();
-
-//        dd($this->attributes['type_woning']);
 
         return $this->attributes;
     }

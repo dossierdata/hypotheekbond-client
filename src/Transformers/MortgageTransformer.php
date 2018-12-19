@@ -59,7 +59,7 @@ class MortgageTransformer extends Transformer
         $transformedMortgageParts = [];
 
         foreach ($mortgageParts as $mortgagePart) {
-            $transformedMortgageParts = $this->mortgagePartTransformer->transform($mortgagePart);
+            $transformedMortgageParts[] = $this->mortgagePartTransformer->transform($mortgagePart);
         }
 
         return [
