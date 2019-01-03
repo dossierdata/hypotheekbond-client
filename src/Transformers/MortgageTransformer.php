@@ -62,6 +62,10 @@ class MortgageTransformer extends Transformer
             $transformedMortgageParts[] = $this->mortgagePartTransformer->transform($mortgagePart);
         }
 
+        if (count($transformedMortgageParts) === 0) {
+            return null;
+        }
+
         return [
             'leningdeel' => $transformedMortgageParts
         ];
