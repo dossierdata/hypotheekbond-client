@@ -73,22 +73,12 @@ class MortgageUnion implements \MortgageUnion\Clients\MortgageUnion
         try {
             $this->validateResult($result);
         } catch (ValidationException $validationException) {
-            $this->getLogger()->error($validationException->getErrors());
             throw (new ValidationException())->setErrors($validationException->getErrors());
         } catch (VersionMismatchException $versionMismatchException) {
-            $this->getLogger()->error($versionMismatchException->getErrors());
             throw (new VersionMismatchException())->setErrors($versionMismatchException->getErrors());
         }
 
         return $result;
-    }
-
-    /**
-     * @return mixed
-     */
-    protected function getLogger()
-    {
-        return app()->make(Log::class);
     }
 
     /**
