@@ -4,16 +4,21 @@ This is a package that consumes the hypotheekbond SOAP API for pushing customer 
 Implement your own version of the MortgageUnionConfig and bind it to the contract.
 
 
-## Publish
+### Publish
 There is an example config file that can be published with :
 ```bash
 php artisan vendor:publish --provider='MortgageUnion\ServiceProvider' --tag='config'
 ```
 
-The config contains advisor and partner credentials. The advisor credentials are the credentials of the user of the tenant of hypotheekbond that you want to access.
-    And the partner credentials need to be requested at hypotheekbond.
+This config contains advisor and partner credentials.
 
-## Examples
+#### Advisor credentials
+The advisor credentials are the login credentials of the user's account on the [hypotheekbond.nl](hypotheekbond.nl) website. These credentials are used to keep track of which user has created a customer.
+
+#### Partner credentials
+The partner credentials are your api username and key. These credentials need to be requested at hypotheekbond. Requests can be sent to [servicedesk@hypotheekbond.nl](mailto:servicedesk@hypotheekbond.nl).
+
+### Examples
 Example push usage:
 ```php
 $customer = new \MortgageUnion\Models\Customer([
@@ -31,7 +36,9 @@ Example signal usage:
 $signalRepository = app()->make(MortgageUnion\Repositories\SignalRepository::class)
 $signalRepository->getSignals();
 ```
-Example Config implementation.
+Example Config implementation:s config contains advisor and partner credentials.
+
+
 ```php
 class MortgageUnionConfig implements \MortgageUnion\Config\Contracts\MortgageUnionConfig
 {
@@ -58,7 +65,7 @@ class MortgageUnionConfig implements \MortgageUnion\Config\Contracts\MortgageUni
     {
         return $this->configRepository->get('hypotheekbond_adviseurPassword');
     }
-
+ingle 
     public function getPartnerUser()
     {
         return $this->configRepository->get('hypotheekbond.partner');
@@ -78,5 +85,18 @@ class MortgageUnionConfig implements \MortgageUnion\Config\Contracts\MortgageUni
     {
         return $this->configRepository->get('hypotheekbond.wsdl');
     }
+}
+```
+Example login implementation:
+```php
+public function controllerMethodHypotheekbondLogin(\MortgageUnion\Repositories\AuthRepository $authRepository)
+{
+    $result = $authRepository->singleClickLogin();
+
+    if ($result instanceof SoapFault) {
+        return abort(500, "Could not authenticate");
+    }
+
+    return redirect()->to($result);
 }
 ```
