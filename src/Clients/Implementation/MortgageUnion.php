@@ -1,11 +1,10 @@
 <?php namespace MortgageUnion\Clients\Implementation;
 
-use Illuminate\Contracts\Logging\Log;
 use MortgageUnion\Config\Contracts\MortgageUnionConfig;
 use MortgageUnion\Exceptions\ValidationException;
 use MortgageUnion\Exceptions\VersionMismatchException;
-use SoapHeader;
 use SoapClient;
+use SoapHeader;
 
 class MortgageUnion implements \MortgageUnion\Clients\MortgageUnion
 {
@@ -39,7 +38,8 @@ class MortgageUnion implements \MortgageUnion\Clients\MortgageUnion
                 'partnerPassword' => $this->mortgageUnionConfig->getPartnerPassword(),
             ];
 
-            $loginHeader = new SoapHeader($this->mortgageUnionConfig->getURI(), 'loginHeader', $loginHeaderContent, false);
+            $loginHeader = new SoapHeader($this->mortgageUnionConfig->getURI(), 'loginHeader', $loginHeaderContent,
+                false);
 
             $this->client->__setSoapHeaders($loginHeader);
         }
@@ -55,6 +55,14 @@ class MortgageUnion implements \MortgageUnion\Clients\MortgageUnion
         return $this->getSoapClient()->getSignals();
     }
 
+    /**
+     * @return mixed
+     */
+    public function singleClickLogin()
+    {
+        return $this->getSoapClient()->singleClickLogin();
+    }
+
     public function createOrUpdateCustomer()
     {
 
@@ -68,7 +76,7 @@ class MortgageUnion implements \MortgageUnion\Clients\MortgageUnion
      */
     public function insertUpdateClients($data)
     {
-        $result =  $this->getSoapClient()->insertUpdateClients($data);
+        $result = $this->getSoapClient()->insertUpdateClients($data);
 
         try {
             $this->validateResult($result);
