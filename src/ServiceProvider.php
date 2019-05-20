@@ -19,7 +19,7 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/hypotheekbond.php' => config_path('hypotheekbond.php')
+            __DIR__ . '/../config/hypotheekbond.php' => config_path('hypotheekbond.php')
         ], 'config');
     }
 
@@ -106,6 +106,11 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             \MortgageUnion\Repositories\CustomerRepository::class,
             \MortgageUnion\Repositories\Implementation\CustomerRepository::class
         );
+
+        $this->app->bind(
+            \MortgageUnion\Repositories\AuthRepository::class,
+            \MortgageUnion\Repositories\Implementation\AuthRepository::class
+        );
     }
 
     /**
@@ -123,7 +128,8 @@ class ServiceProvider extends \Illuminate\Support\ServiceProvider
             \MortgageUnion\Repositories\CustomerRepository::class,
             \MortgageUnion\Clients\MortgageUnion::class,
             \MortgageUnion\Repositories\AgencyRepository::class,
-            \MortgageUnion\Interfaces\Signal::class
+            \MortgageUnion\Interfaces\Signal::class,
+            \MortgageUnion\Repositories\AuthRepository::class
         ];
     }
 }
