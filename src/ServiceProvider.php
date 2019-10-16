@@ -2,15 +2,10 @@
 
 namespace MortgageUnion;
 
-class ServiceProvider extends \Illuminate\Support\ServiceProvider
-{
-    /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = true;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
+class ServiceProvider extends \Illuminate\Support\ServiceProvider implements DeferrableProvider
+{
     /**
      * Bootstrap any application services.
      *
