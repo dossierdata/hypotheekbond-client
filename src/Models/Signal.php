@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Vendors\MortgageUnion\Models;
+namespace MortgageUnion\Models;
 
 class Signal
 {
