@@ -6,8 +6,8 @@
   "minimum-stability": "dev",
   "require": {
     "ext-soap": "*",
-    "laravel/framework": "^5.2",
-    "nesbot/carbon": "~1.0"
+    "laravel/framework": "^6.0",
+    "nesbot/carbon": "~1.0 | ~2.0"
   },
   "authors": [
     {
@@ -16,7 +16,7 @@
     },
     {
       "name": "Lucas van der Have",
-      "email": "lucasvdhave@gmail.com"
+      "email": "lucas@dossierdata.nl"
     }
   ],
   "autoload": {
